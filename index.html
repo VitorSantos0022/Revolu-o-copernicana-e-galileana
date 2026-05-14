@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Universo de Galileu e Copérnico</title>
+
+<style>
+
+body{
+  margin:0;
+  overflow:hidden;
+  background:black;
+  font-family:Arial;
+  color:white;
+}
+
+canvas{
+  display:block;
+}
+
+#painel{
+  position:absolute;
+  top:20px;
+  left:20px;
+  z-index:10;
+  width:320px;
+  background:rgba(0,0,0,0.7);
+  padding:20px;
+  border-radius:20px;
+  backdrop-filter:blur(10px);
+}
+
+h1{
+  color:#38bdf8;
+  margin-bottom:15px;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border:none;
+  border-radius:12px;
+  background:#38bdf8;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:16px;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.03);
+}
+
+#texto{
+  margin-top:15px;
+  line-height:1.5;
+  color:#ddd;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="painel">
+
+<h1>Universo de Galileu e Copérnico</h1>
+
+<button onclick="geo()">
+Modelo Geocêntrico
+</button>
+
+<button onclick="helio()">
+Modelo Heliocêntrico
+</button>
+
+<button onclick="narrar()">
+Narrar IA
+</button>
+
+<div id="texto">
+Modelo heliocêntrico: o Sol está no centro do sistema solar.
+</div>
+<br><br><br>
+<div id="texto">
+Nalyanny Azevedo, Ronaldy Gabriel, Anderson, Kauê e Joaquim.
+</div>
+
+</div>
+
+<canvas id="canvas"></canvas>
+
+<script>
+
+const canvas =
+document.getElementById("canvas");
+
+const ctx =
+canvas.getContext("2d");
+
+canvas.width =
+window.innerWidth;
+
+canvas.height =
+window.innerHeight;
+
+let modelo = "helio";
+
+const estrelas = [];
+
+for(let i=0;i<400;i++){
+
+  estrelas.push({
+
+    x:Math.random()*canvas.width,
+
+    y:Math.random()*canvas.height,
+
+    r:Math.random()*2
+
+  });
+
+}
+
+const planetas = [
+
+{
+nome:"Mercúrio",
+cor:"#94a3b8",
+dist:80,
+size:8,
+vel:0.02,
+ang:0
+},
+
+{
+nome:"Vênus",
+cor:"#f59e0b",
+dist:140,
+size:12,
+vel:0.015,
+ang:0
+},
+
+{
+nome:"Terra",
+cor:"#22c55e",
+dist:200,
+size:14,
+vel:0.01,
+ang:0
+},
+
+{
+nome:"Marte",
+cor:"#ef4444",
+dist:260,
+size:10,
+vel:0.008,
+ang:0
+}
+
+];
+
+function desenhar(){
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+ctx.fillStyle = "black";
+
+ctx.fillRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+estrelas.forEach(e=>{
+
+ctx.beginPath();
+
+ctx.arc(
+e.x,
+e.y,
+e.r,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle = "white";
+
+ctx.fill();
+
+});
+
+const centroX =
+canvas.width/2;
+
+const centroY =
+canvas.height/2;
+
+if(modelo === "helio"){
+
+ctx.beginPath();
+
+ctx.arc(
+centroX,
+centroY,
+35,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle = "#facc15";
+
+ctx.shadowBlur = 40;
+
+ctx.shadowColor = "#facc15";
+
+ctx.fill();
+
+ctx.shadowBlur = 0;
+
+}else{
+
+ctx.beginPath();
+
+ctx.arc(
+centroX,
+centroY,
+30,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle = "#22c55e";
+
+ctx.fill();
+
+}
+
+planetas.forEach(p=>{
+
+ctx.beginPath();
+
+ctx.arc(
+centroX,
+centroY,
+p.dist,
+0,
+Math.PI*2
+);
+
+ctx.strokeStyle =
+"rgba(255,255,255,0.15)";
+
+ctx.stroke();
+
+p.ang += p.vel;
+
+const x =
+centroX +
+Math.cos(p.ang)*p.dist;
+
+const y =
+centroY +
+Math.sin(p.ang)*p.dist;
+
+ctx.beginPath();
+
+ctx.arc(
+x,
+y,
+p.size,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle = p.cor;
+
+ctx.fill();
+
+});
+
+requestAnimationFrame(
+desenhar
+);
+
+}
+
+desenhar();
+
+function geo(){
+
+modelo = "geo";
+
+document.getElementById(
+"texto"
+).innerHTML =
+"Modelo geocêntrico: a Terra era considerada o centro do universo.";
+
+}
+
+function helio(){
+
+modelo = "helio";
+
+document.getElementById(
+"texto"
+).innerHTML =
+"Modelo heliocêntrico: Copérnico colocou o Sol no centro.";
+
+}
+
+function narrar(){
+
+const texto =
+document.getElementById(
+"texto"
+).innerText;
+
+const speech =
+new SpeechSynthesisUtterance(
+texto
+);
+
+speech.lang = "pt-BR";
+
+speech.rate = 1;
+
+speech.pitch = 1;
+
+speechSynthesis.speak(
+speech
+);
+
+}
+
+window.addEventListener(
+"resize",
+()=>{
+
+canvas.width =
+window.innerWidth;
+
+canvas.height =
+window.innerHeight;
+
+}
+);
+
+</script>
+
+</body>
+</html>
