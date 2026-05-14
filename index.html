@@ -35,6 +35,7 @@ canvas{
 h1{
   color:#38bdf8;
   margin-bottom:15px;
+  font-size:32px;
 }
 
 button{
@@ -59,6 +60,86 @@ button:hover{
   margin-top:15px;
   line-height:1.5;
   color:#ddd;
+}
+
+/* ========================= */
+/* MOBILE RESPONSIVO */
+/* ========================= */
+
+@media (max-width: 768px){
+
+  #painel{
+
+    width:90%;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    top:15px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+  }
+
+  h1{
+
+    font-size:26px;
+
+    text-align:center;
+
+  }
+
+  button{
+
+    font-size:15px;
+
+    padding:15px;
+
+  }
+
+  #texto{
+
+    font-size:15px;
+
+    text-align:center;
+
+  }
+
+}
+
+@media (max-width: 480px){
+
+  #painel{
+
+    width:92%;
+
+    padding:16px;
+
+  }
+
+  h1{
+
+    font-size:22px;
+
+  }
+
+  button{
+
+    font-size:14px;
+
+    padding:14px;
+
+  }
+
+  #texto{
+
+    font-size:14px;
+
+  }
+
 }
 
 </style>
