@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>Universo de Galileu</title>
 
@@ -49,11 +49,6 @@ button{
   font-weight:bold;
   cursor:pointer;
   font-size:16px;
-  transition:0.3s;
-}
-
-button:hover{
-  transform:scale(1.03);
 }
 
 #texto{
@@ -62,9 +57,9 @@ button:hover{
   color:#ddd;
 }
 
-/* ========================= */
+/* ===================== */
 /* MOBILE */
-/* ========================= */
+/* ===================== */
 
 @media screen and (max-width:768px){
 
@@ -78,9 +73,7 @@ button:hover{
 
     top:10px;
 
-    padding:18px;
-
-    border-radius:18px;
+    padding:16px;
 
   }
 
@@ -88,47 +81,13 @@ button:hover{
 
     text-align:center;
 
-    font-size:28px;
+    font-size:26px;
 
   }
 
   button{
 
     font-size:15px;
-
-    padding:15px;
-
-  }
-
-  #texto{
-
-    text-align:center;
-
-    font-size:15px;
-
-  }
-
-}
-
-@media screen and (max-width:480px){
-
-  #painel{
-
-    width:92%;
-
-    padding:15px;
-
-  }
-
-  h1{
-
-    font-size:24px;
-
-  }
-
-  button{
-
-    font-size:14px;
 
     padding:14px;
 
@@ -136,7 +95,9 @@ button:hover{
 
   #texto{
 
-    font-size:14px;
+    text-align:center;
+
+    font-size:15px;
 
   }
 
@@ -288,8 +249,21 @@ ctx.fill();
 const centroX =
 canvas.width/2;
 
-const centroY =
-canvas.height/2;
+/* ===================== */
+/* AJUSTE MOBILE IPHONE */
+/* ===================== */
+
+let centroY;
+
+if(window.innerWidth <= 768){
+
+  centroY = canvas.height/2 + 140;
+
+}else{
+
+  centroY = canvas.height/2;
+
+}
 
 if(modelo === "helio"){
 
@@ -427,42 +401,6 @@ speech
 );
 
 }
-
-/* ========================= */
-/* TOUCH MOBILE */
-/* ========================= */
-
-let touchStartX = 0;
-
-window.addEventListener(
-"touchstart",
-(e)=>{
-
-touchStartX =
-e.touches[0].clientX;
-
-}
-);
-
-window.addEventListener(
-"touchmove",
-(e)=>{
-
-const moveX =
-e.touches[0].clientX;
-
-if(moveX > touchStartX){
-
-modelo = "helio";
-
-}else{
-
-modelo = "geo";
-
-}
-
-}
-);
 
 window.addEventListener(
 "resize",
